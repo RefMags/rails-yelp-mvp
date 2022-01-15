@@ -2,3 +2,17 @@
 <p><%= @restaurant.address%></p>
 <p><%= @restaurant.phone_number%></p>
 <p><%= @restaurant.category%></p>
+<ul class="list-group">
+  <% @restaurant.reviews.each do |review| %>
+    <li class="list-group-item"><%= review.content  %></li>
+    <li class="list-group-item"><%= review.rating  %></li>
+  <% end %>
+</ul>
+
+<%= simple_form_for [ @restaurant, @review ] do |f| %>
+  <%= f.input :content %>
+  <%= f.input :rating, :collection => 0..5 %>
+  <%= f.submit "Submit review", class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to 'Leave a review', new_restaurant_review_path(@restaurant) %>
